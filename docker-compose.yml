@@ -1,0 +1,38 @@
+services:
+  llama-cpp-server:
+    image: ghcr.io/ggml-org/llama.cpp:server-vulkan
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - llama-storage:/models:Z
+    devices:
+      - "/dev/dri/renderD128:/dev/dri/renderD128"
+      - "/dev/dri/card1:/dev/dri/card1"
+    environment:
+      - LLAMA_ARG_HOST=0.0.0.0
+      - LLAMA_ARG_PORT=8000
+      - LLAMA_ARG_MODEL=/models/DeepSeek-R1-Distill-Llama-8B-Q4_K_M.gguf
+      # - LLAMA_ARG_MODEL= #model path (default: models/$filename with filename from --hf-file or --model-url if set, otherwise models/7B/ggml-model-f16.gguf)
+      # - LLAMA_ARG_MODEL_URL= #model download url (default: unused)
+      # - LLAMA_ARG_HF_REPO= #Hugging Face model repository (default: unused)
+      # - LLAMA_ARG_HF_FILE= #Hugging Face model file (default: unused)
+      # - HF_TOKEN= #Hugging Face access token (default: value from HF_TOKEN environment variable)
+      # - HF_MODEL=
+      # - LLAMA_ARG_N_PREDICT=
+      - LLAMA_ARG_N_GPU_LAYERS=32
+      - LLAMA_ARG_CTX_SIZE=16384
+      - LLAMA_ARG_FLASH_ATTN
+      # - LLAMA_ARG_DEVICE="/dev/dri/renderD128:/dev/dri/renderD128"
+      # - LLAMA_ARG_DEVICE="/dev/dri/card1:/dev/dri/card1"
+      - API_KEY=n  # Be sure to replace with the actual API key if needed
+      - LLAMA_LOG_COLORS
+      - LLAMA_ARG_NO_WEBUI=false # Disable the Web UI (default: enabled)
+
+volumes:
+  llama-storage:
+    driver: local
+    driver_opts:
+      type: none
+      device: /media/storage/models
+      o: bind
