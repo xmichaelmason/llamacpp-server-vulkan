@@ -4,7 +4,7 @@ This repository contains a `docker-compose.yml` file that defines a `llama.cpp` 
 
 ## Why Vulkan?
 
-Workarounds to enable ROCm support on AMD iGPUs exist, but current implementations only utilize GTT memory, which performs no better than CPU inference. Vulkan drivers on an AMD 780m perform nearly 50% faster on `llama-3.1-8b-instruct` than applying the ROCm workaround to enable GFX1103 support (and CPU inference).
+Workarounds to enable ROCm support on AMD iGPUs exist [Ollama on 780m](https://github.com/xmichaelmason/ollama-amd-780m), but current implementations only utilize GTT memory, which performs no better than CPU inference. Vulkan drivers on an AMD 780m perform nearly 50% faster on `llama-3.1-8b-instruct` than applying the ROCm workaround to enable GFX1103 support (and CPU inference).
 
 ## Prerequisites
 
